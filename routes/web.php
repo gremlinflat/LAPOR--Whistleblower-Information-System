@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home'); //Change index page
+Route::get('/', [PostController::class, 'index'])->name('/');
+
+Route::get('/cari/{search_text}', [PostController::class, 'search']);
+
+Route::get('/buat', function() {
+    return view('input');
 });
 
-Route::get('/buat-laporan', function () {
-    return view('input'); 
-});
+Route::get('/laporan/{id}', [PostController::class, 'show'])->name('laporan');
+
+Route::post('/tambah', [PostController::class, 'create'])->name('tambah');
+
+Route::get('/perbarui/{id}', [PostController::class, 'renew'])->name('perbarui');
+
+Route::post('/ubah', [PostController::class, 'update'])->name('ubah');
+
+Route::post('/hapus', [PostController::class, 'delete'])->name('delete');
+
